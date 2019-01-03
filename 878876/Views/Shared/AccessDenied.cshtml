@@ -1,0 +1,29 @@
+﻿<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="top-buffer"></div>
+        <div class="panel panel-danger">
+            <div class="panel-body">
+                <section>
+                    <h1 class="text-danger">Error 403: You are not authorised to do this.</h1>
+                    <br />
+                    <a href="javascript:void(0)" onClick="goBack()" class="btn btn-success">Back</a>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+@section scripts
+    {
+    <script>
+        function goBack() {
+            if (history.length === 1) {
+                window.location = "https://localhost:44392/"
+            } else {
+                history.back();
+            }
+        }
+    </script>
+}

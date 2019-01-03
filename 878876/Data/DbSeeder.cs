@@ -20,12 +20,15 @@ namespace _878876.Data
         private static void CreateData(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
-            context.Post.Add(new Post()
+            if(context.Post.Any() == false)
             {
-                Title = "Test Post 1.",
-                PostDate = DateTime.Now,
-                Content = "This is some content for a test post.",
-            });
+                context.Post.Add(new Post()
+                {
+                    Title = "Test Post 1.",
+                    PostDate = DateTime.Now,
+                    Content = "This is some content for a test post.",
+                });
+            } 
             context.SaveChanges();
         }
 

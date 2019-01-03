@@ -89,5 +89,9 @@ namespace _878876.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

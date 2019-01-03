@@ -90,6 +90,7 @@ namespace _878876.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize(Policy = "canEdit")]
         public IActionResult Create()
         {
             return View();
@@ -100,6 +101,7 @@ namespace _878876.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy= "canEdit")]
         public async Task<IActionResult> Create([Bind("Id,Title,PostDate,Content")] Post post)
         {
             if (ModelState.IsValid)
@@ -112,6 +114,7 @@ namespace _878876.Controllers
         }
 
         // GET: Posts/Edit/5
+        [Authorize(Policy = "canEdit")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -132,6 +135,7 @@ namespace _878876.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "canEdit")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,PostDate,Content")] Post post)
         {
             if (id != post.Id)
@@ -163,6 +167,7 @@ namespace _878876.Controllers
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Policy = "canEdit")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -183,6 +188,7 @@ namespace _878876.Controllers
         // POST: Posts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "canEdit")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Post.FindAsync(id);

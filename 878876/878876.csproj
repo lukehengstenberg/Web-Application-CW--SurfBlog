@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\AccessDenied.cshtml" />
     <None Include="Views\Posts\Create.cshtml" />
     <None Include="Views\Posts\Delete.cshtml" />
     <None Include="Views\Posts\Details.cshtml" />

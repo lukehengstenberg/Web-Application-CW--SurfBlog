@@ -54,7 +54,7 @@
                             </li>
                             <li class="nav-item">
                                 <form class="nav-link text-dark" method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                                    <input type="submit" value="Logout" />
+                                    <button type="submit" class="btn btn-link navbar-btn text-dark navbar-link">Logout</button>
                                 </form>
                             </li>
                         }
@@ -75,6 +75,18 @@
             &copy; 2018 - _878876 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <script type="text/javascript">
+        $(function () {
+            $(document).ajaxError(function (xhr, props) {
+                if (props.status == 403) {
+                    window.location = "https://localhost:44392/Account/AccessDenied";
+                } else if (props.status == 401) {
+                    window.location = "https://localhost:44392/Account/Login";
+                }
+            });
+        });
+    </script>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
