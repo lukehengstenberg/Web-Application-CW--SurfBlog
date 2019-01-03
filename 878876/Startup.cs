@@ -14,6 +14,7 @@ using _878876.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace _878876
 {
@@ -49,13 +50,13 @@ namespace _878876
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("canEdit", policy => policy.RequireClaim("canEdit"));
-                options.AddPolicy("canComment", policy => policy.RequireClaim("canComment"));
+                options.AddPolicy("canEdit", policy => policy.RequireClaim("canEdit", "true"));
+                options.AddPolicy("canComment", policy => policy.RequireClaim("canComment", "true"));
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -72,7 +73,6 @@ namespace _878876
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            DbSeeder.SeedDb(userManager);
 
             app.UseMvc(routes =>
             {
@@ -80,6 +80,7 @@ namespace _878876
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            DbSeeder.SeedDb(context, userManager);
         }
     }
 }
