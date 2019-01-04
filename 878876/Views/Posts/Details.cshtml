@@ -6,10 +6,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>View Post:</h1>
 
 <div>
-    <h4>Post</h4>
+    <h4>@Html.DisplayFor(model => model.Post.Title)</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -25,7 +25,7 @@
             @Html.DisplayFor(model => model.Post.Author)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Post.PostDate)
+            Post Date:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Post.PostDate)
@@ -42,13 +42,7 @@
     <thead>
         <tr>
             <th>
-                Author
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Content
+            Comments:
             </th>
             <th></th>
         </tr>
@@ -58,16 +52,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CommentDate)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    Posted by: @Html.DisplayFor(modelItem => item.Author) - @Html.DisplayFor(modelItem => item.CommentDate)
                 </td>
             </tr>
         }

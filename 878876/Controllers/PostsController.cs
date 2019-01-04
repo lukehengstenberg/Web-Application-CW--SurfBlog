@@ -50,6 +50,7 @@ namespace _878876.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy ="canComment")]
         public async Task<IActionResult> Details([Bind("PostID,Author,CommentDate,Content")] PostCommentsViewModel viewModel)
         {
             if (ModelState.IsValid)
