@@ -7,6 +7,9 @@ using _878876.Models;
 using Microsoft.AspNetCore.Identity;
 using _878876.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using _878876.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace _878876.Controllers
 {
@@ -21,6 +24,60 @@ namespace _878876.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            List<UserListViewModel> model = new List<UserListViewModel>();
+            model = _userManager.Users.Select(u => new UserListViewModel
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email
+            }).ToList();
+            return View(model);
+        }
+
+        [Authorize(Policy = "AddEditUser")]
+        [HttpGet]
+        public IActionResult AddUser()
+        {
+            UserViewModel model = new UserViewModel();
+            model.UserClaims = ClaimData.UserClaims.Select(c => new SelectListItem
+            {
+                Text = c,
+                Value = c
+            }).ToList();
+            return PartialView("_AddUser", model);
+        }
+
+        [Authorize(Policy ="AddEditUser")]
+        [HttpPost]
+        public async Task<IActionResult> AddUser([Bind("Id,Name,Email,UserClaims,UserName,Password")]UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = new ApplicationUser
+                {
+                    Name = model.Name,
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                List<SelectListItem> userClaims = model.UserClaims.Where(c => c.Selected).ToList();
+                foreach(var claim in userClaims)
+                {
+                    await _userManager.AddClaimAsync(user, new Claim(claim.Value, claim.Value));
+                }
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(model);
         }
 
         [AllowAnonymous]

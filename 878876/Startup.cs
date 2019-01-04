@@ -55,8 +55,14 @@ namespace _878876
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("canEdit", policy => policy.RequireClaim("canEdit", "true"));
-                options.AddPolicy("canComment", policy => policy.RequireClaim("canComment", "true"));
+                options.AddPolicy("canEdit", policy => policy.RequireClaim("canEdit", "canEdit"));
+                options.AddPolicy("canComment", policy => policy.RequireClaim("canComment", "canComment"));
+                options.AddPolicy("AddEditUser", policy =>
+                {
+                    policy.RequireClaim("canAddUser", "canAddUser");
+                    policy.RequireClaim("canEditUser", "canEditUser");
+                });
+                options.AddPolicy("DeleteUser", policy => policy.RequireClaim("canDeleteUser", "canDeleteUser"));
             });
         }
 

@@ -35,12 +35,23 @@ namespace _878876.Data
 
         private static void CreateUsers(UserManager<ApplicationUser> userManager)
         {
-            if(userManager.FindByNameAsync("Member1@email.com").Result == null)
+            if (userManager.FindByNameAsync("SiteOwner@email.com").Result == null)
+            {
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = "SiteOwner@email.com",
+                    Email = "SiteOwner@email.com",
+                    Name = "Luke",
+                };
+                userManager.CreateAsync(user, "Password123!").Wait();
+            }
+            if (userManager.FindByNameAsync("Member1@email.com").Result == null)
             {
                 ApplicationUser user = new ApplicationUser
                 {
                     UserName = "Member1@email.com",
                     Email = "Member1@email.com",
+                    Name = "Member1",
                 };
                 userManager.CreateAsync(user, "Password123!").Wait();
             }
@@ -50,6 +61,7 @@ namespace _878876.Data
                 {
                     UserName = "Customer1@email.com",
                     Email = "Customer1@email.com",
+                    Name = "Customer1",
                 };
                 userManager.CreateAsync(user, "Password123!").Wait();
             }
@@ -59,6 +71,7 @@ namespace _878876.Data
                 {
                     UserName = "Customer2@email.com",
                     Email = "Customer2@email.com",
+                    Name = "Customer2",
                 };
                 userManager.CreateAsync(user, "Password123!").Wait();
             }
@@ -68,6 +81,7 @@ namespace _878876.Data
                 {
                     UserName = "Customer3@email.com",
                     Email = "Customer3@email.com",
+                    Name = "Customer3",
                 };
                 userManager.CreateAsync(user, "Password123!").Wait();
             }
@@ -77,6 +91,7 @@ namespace _878876.Data
                 {
                     UserName = "Customer4@email.com",
                     Email = "Customer4@email.com",
+                    Name = "Customer4",
                 };
                 userManager.CreateAsync(user, "Password123!").Wait();
             }
@@ -86,6 +101,7 @@ namespace _878876.Data
                 {
                     UserName = "Customer5@email.com",
                     Email = "Customer5@email.com",
+                    Name = "Customer5",
                 };
                 userManager.CreateAsync(user, "Password123!").Wait();
             }
@@ -93,16 +109,40 @@ namespace _878876.Data
 
         private static async Task CreateClaims(UserManager<ApplicationUser> userManager)
         {
+            ApplicationUser siteowner = await userManager.FindByEmailAsync("SiteOwner@email.com");
+            var allClaimsList = (await userManager.GetClaimsAsync(siteowner)).Select(p => p.Type);
+
+            if (!allClaimsList.Contains("canEdit"))
+            {
+                await userManager.AddClaimAsync(siteowner, new Claim("canEdit", "canEdit"));
+            }
+            if (!allClaimsList.Contains("canComment"))
+            {
+                await userManager.AddClaimAsync(siteowner, new Claim("canComment", "canComment"));
+            }
+            if (!allClaimsList.Contains("canAddUser"))
+            {
+                await userManager.AddClaimAsync(siteowner, new Claim("canAddUser", "canAddUser"));
+            }
+            if (!allClaimsList.Contains("canEditUser"))
+            {
+                await userManager.AddClaimAsync(siteowner, new Claim("canEditUser", "canEditUser"));
+            }
+            if (!allClaimsList.Contains("canDeleteUser"))
+            {
+                await userManager.AddClaimAsync(siteowner, new Claim("canDeleteUser", "canDeleteUser"));
+            }
+
             ApplicationUser member1 = await userManager.FindByEmailAsync("Member1@email.com");
             var claimList = (await userManager.GetClaimsAsync(member1)).Select(p => p.Type);
 
             if (!claimList.Contains("canEdit"))
             {
-                await userManager.AddClaimAsync(member1, new Claim("canEdit", "true"));
+                await userManager.AddClaimAsync(member1, new Claim("canEdit", "canEdit"));
             }
             if (!claimList.Contains("canComment"))
             {
-                await userManager.AddClaimAsync(member1, new Claim("canComment", "true"));
+                await userManager.AddClaimAsync(member1, new Claim("canComment", "canComment"));
             }
 
             ApplicationUser customer1 = await userManager.FindByEmailAsync("Customer1@email.com");
@@ -110,7 +150,7 @@ namespace _878876.Data
 
             if (!claimList2.Contains("canComment"))
             {
-                await userManager.AddClaimAsync(customer1, new Claim("canComment", "true"));
+                await userManager.AddClaimAsync(customer1, new Claim("canComment", "canComment"));
             }
 
             ApplicationUser customer2 = await userManager.FindByEmailAsync("Customer2@email.com");
@@ -118,7 +158,7 @@ namespace _878876.Data
 
             if (!claimList3.Contains("canComment"))
             {
-                await userManager.AddClaimAsync(customer2, new Claim("canComment", "true"));
+                await userManager.AddClaimAsync(customer2, new Claim("canComment", "canComment"));
             }
 
             ApplicationUser customer3 = await userManager.FindByEmailAsync("Customer3@email.com");
@@ -126,7 +166,7 @@ namespace _878876.Data
 
             if (!claimList4.Contains("canComment"))
             {
-                await userManager.AddClaimAsync(customer3, new Claim("canComment", "true"));
+                await userManager.AddClaimAsync(customer3, new Claim("canComment", "canComment"));
             }
 
             ApplicationUser customer4 = await userManager.FindByEmailAsync("Customer4@email.com");
@@ -134,7 +174,7 @@ namespace _878876.Data
 
             if (!claimList5.Contains("canComment"))
             {
-                await userManager.AddClaimAsync(customer4, new Claim("canComment", "true"));
+                await userManager.AddClaimAsync(customer4, new Claim("canComment", "canComment"));
             }
 
             ApplicationUser customer5 = await userManager.FindByEmailAsync("Customer5@email.com");
@@ -142,7 +182,7 @@ namespace _878876.Data
 
             if (!claimList6.Contains("canComment"))
             {
-                await userManager.AddClaimAsync(customer5, new Claim("canComment", "true"));
+                await userManager.AddClaimAsync(customer5, new Claim("canComment", "canComment"));
             }
         }
     }

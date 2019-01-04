@@ -1,0 +1,44 @@
+﻿@model IEnumerable<UserListViewModel>
+@using _878876.ViewModels
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="AddUser">Add User</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Action
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-action="EditUser" asp-route-id="@item.Id">Edit</a> 
+                    <a asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
