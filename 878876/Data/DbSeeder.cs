@@ -25,6 +25,7 @@ namespace _878876.Data
                 context.Post.Add(new Post()
                 {
                     Title = "Test Post 1.",
+                    Author = "Member1@email.com",
                     PostDate = DateTime.Now,
                     Content = "This is some content for a test post.",
                 });

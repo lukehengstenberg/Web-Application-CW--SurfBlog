@@ -15,6 +15,9 @@ namespace _878876.Models
         public string Title { get; set; }
 
         [Required]
+        public string Author { get; set; }
+
+        [Required]
         public DateTime PostDate { get; set; }
         
         [Required]

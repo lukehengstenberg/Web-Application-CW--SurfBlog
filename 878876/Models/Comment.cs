@@ -16,6 +16,9 @@ namespace _878876.Models
         public string Author { get; set; }
 
         [Required]
+        public DateTime CommentDate { get; set; }
+
+        [Required]
         public string Content { get; set; }
 
         [Required]

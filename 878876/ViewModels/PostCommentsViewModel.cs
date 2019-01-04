@@ -13,6 +13,7 @@ namespace _878876.ViewModels
 
         public int PostID { get; set; }
         public string Author { get; set; }
+        public DateTime CommentDate { get; set; }
         public string Content { get; set; }
     }
 }

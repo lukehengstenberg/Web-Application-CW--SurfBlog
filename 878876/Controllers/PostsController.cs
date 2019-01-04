@@ -50,13 +50,14 @@ namespace _878876.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details([Bind("PostID,Author,Content")] PostCommentsViewModel viewModel)
+        public async Task<IActionResult> Details([Bind("PostID,Author,CommentDate,Content")] PostCommentsViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 Comment comment = new Comment();
 
                 comment.Author = viewModel.Author;
+                comment.CommentDate = DateTime.Now;
                 comment.Content = viewModel.Content;
 
                 Post post = await _context.Post
@@ -102,10 +103,12 @@ namespace _878876.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy= "canEdit")]
-        public async Task<IActionResult> Create([Bind("Id,Title,PostDate,Content")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,Title,Author,PostDate,Content")] Post post)
         {
             if (ModelState.IsValid)
             {
+                post.Author = User.Identity.Name.ToString();
+                post.PostDate = DateTime.Now;
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -136,7 +139,7 @@ namespace _878876.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "canEdit")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,PostDate,Content")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,PostDate,Content")] Post post)
         {
             if (id != post.Id)
             {
@@ -147,6 +150,8 @@ namespace _878876.Controllers
             {
                 try
                 {
+                    post.Author = User.Identity.Name.ToString();
+                    post.PostDate = DateTime.Now;
                     _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
