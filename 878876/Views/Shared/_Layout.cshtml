@@ -20,9 +20,17 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body>
     <header>
+        <div class="banner-holder">
+            <img class="banner" src="~/images/image1.jpeg" />
+            <img class="banner" src="~/images/image2.jpg" />
+            <img class="banner" src="~/images/image3.jpeg" />
+            <img class="banner" src="~/images/image4.jpeg" />
+        </div>
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Surf Blog</a>
@@ -86,6 +94,23 @@
                 }
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        var slideIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("banner");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > x.length) { slideIndex = 1 }
+            x[slideIndex - 1].style.display = "block";
+            setTimeout(carousel, 4000);
+        }
     </script>
 
     <environment include="Development">
