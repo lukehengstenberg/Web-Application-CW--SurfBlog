@@ -7,18 +7,9 @@ using System.Threading.Tasks;
 
 namespace _878876.ViewModels
 {
-    public class UserViewModel
+    public class EditUserViewModel
     {
         public string Id { get; set; }
-
-        public string UserName { get; set; }
-
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Display(Name = "Confirm Password")]
-        [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
 
         public string Name { get; set; }
 

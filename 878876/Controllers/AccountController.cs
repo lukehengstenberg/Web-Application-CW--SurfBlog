@@ -49,7 +49,7 @@ namespace _878876.Controllers
                 Text = c,
                 Value = c
             }).ToList();
-            return PartialView("_AddUser", model);
+            return View("AddUser", model);
         }
 
         [Authorize(Policy ="AddEditUser")]
@@ -62,8 +62,7 @@ namespace _878876.Controllers
                 {
                     Name = model.Name,
                     UserName = model.UserName,
-                    Email = model.Email,
-                    SecurityStamp = Guid.NewGuid().ToString()
+                    Email = model.Email
                 };
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                 List<SelectListItem> userClaims = model.UserClaims.Where(c => c.Selected).ToList();
@@ -78,6 +77,73 @@ namespace _878876.Controllers
                 }
             }
             return View(model);
+        }
+
+        [Authorize(Policy = "AddEditUser")]
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            EditUserViewModel model = new EditUserViewModel();
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if(user != null)
+                {
+                    model.Name = user.Name;
+                    model.Email = user.Email;
+                    var claims = await _userManager.GetClaimsAsync(user);
+
+                    model.UserClaims = ClaimData.UserClaims.Select(c => new SelectListItem
+                    {
+                        Text = c,
+                        Value = c,
+                        Selected = claims.Any(x => x.Value == c)
+                    }).ToList();
+                }
+                else
+                {
+                    model.UserClaims = ClaimData.UserClaims.Select(c => new SelectListItem
+                    {
+                        Text = c,
+                        Value = c
+                    }).ToList();
+                }
+            }
+            return View("EditUser", model);
+        }
+
+        [Authorize(Policy = "AddEditUser")]
+        [HttpPost]
+        public async Task<IActionResult> EditUser(string id, EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    user.Name = model.Name;
+                    user.Email = model.Email;
+                    var claims = await _userManager.GetClaimsAsync(user);
+
+                    List<SelectListItem> userClaims = model.UserClaims.Where(c => c.Selected && claims.Any(u => u.Value != c.Value)).ToList();
+                    foreach (var claim in userClaims)
+                    {
+                        await _userManager.AddClaimAsync(user, new Claim(claim.Value, claim.Value));
+                    }
+                    IdentityResult result = await _userManager.UpdateAsync(user);
+                    List<Claim> userRemoveClaims = claims.Where(c => model.UserClaims.Any(u => u.Value == c.Value && !u.Selected)).ToList();
+                    foreach (Claim claim in userRemoveClaims)
+                    {
+                        await _userManager.RemoveClaimAsync(user, claim);
+                    }
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            return View("EditUser", model);
         }
 
         [AllowAnonymous]
