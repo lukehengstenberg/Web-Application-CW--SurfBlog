@@ -53,6 +53,7 @@ namespace _878876.Controllers
         }
 
         [Authorize(Policy ="AddEditUser")]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> AddUser([Bind("Id,Name,Email,UserClaims,UserName,Password")]UserViewModel model)
         {
@@ -114,8 +115,9 @@ namespace _878876.Controllers
         }
 
         [Authorize(Policy = "AddEditUser")]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> EditUser(string id, EditUserViewModel model)
+        public async Task<IActionResult> EditUser(string id, [Bind("Id,Name,Email,UserClaims")] EditUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -144,6 +146,42 @@ namespace _878876.Controllers
                 }
             }
             return View("EditUser", model);
+        }
+
+        [Authorize(Policy = "DeleteUser")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            string name = string.Empty;
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    name = user.Name;
+                }
+            }
+            return View("DeleteUser", name);
+        }
+
+        [Authorize(Policy = "DeleteUser")]
+        [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("DeleteUser")]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            if (!String.IsNullOrEmpty(id))
+            {
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    IdentityResult result = await _userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            return View();
         }
 
         [AllowAnonymous]

@@ -1,0 +1,17 @@
+﻿@using _878876.ViewModels
+@model string
+
+@{
+    ViewData["Title"] = "DeleteUser";
+}
+
+<h1>Delete User</h1>
+
+    <form asp-action="DeleteUser">
+        <div>Are you sure you want to delete @Model?</div>
+        <br />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+
+
