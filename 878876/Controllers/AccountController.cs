@@ -26,6 +26,7 @@ namespace _878876.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize(Policy ="AddEditUser")]
         [HttpGet]
         public IActionResult Index()
         {

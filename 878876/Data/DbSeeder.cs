@@ -24,12 +24,30 @@ namespace _878876.Data
             {
                 context.Post.Add(new Post()
                 {
-                    Title = "Test Post 1.",
+                    Title = "What is surfing?",
                     Author = "Member1@email.com",
                     PostDate = DateTime.Now,
-                    Content = "This is some content for a test post.",
+                    Content = "Surfing is a surface water sport in which the wave rider, referred to as a surfer, " +
+                    "rides on the forward or deep face of a moving wave, which usually carries the surfer towards the shore. Waves suitable for surfing are primarily found in the ocean, " +
+                    "but can also be found in lakes or rivers in the form of a standing wave or tidal bore. However, surfers can also utilize artificial waves such as those from boat wakes " +
+                    "and the waves created in artificial wave pools. The term surfing refers to the act of riding a wave, regardless of whether the wave is ridden with a board or without a board, " +
+                    "and regardless of the stance used.The native peoples of the Pacific, for instance, surfed waves on alaia, paipo, and other such craft, and did so on their belly and knees." +
+                    "The modern - day definition of surfing, however, most often refers to a surfer riding a wave standing up on a surfboard this is also referred to as stand - up surfing.",
                 });
-            } 
+                context.Post.Add(new Post()
+                {
+                    Title = "What is swell?",
+                    Author = "Member1@email.com",
+                    PostDate = DateTime.Now,
+                    Content = "Swell is generated when wind blows consistently over a large area of open water, called the wind's fetch. " +
+                    "The size of a swell is determined by the strength of the wind and the length of its fetch and duration. Because of this, surf tends to be larger and more prevalent on coastlines " +
+                    "exposed to large expanses of ocean traversed by intense low pressure systems. Local wind conditions affect wave quality, since the surface of a wave can become choppy in blustery conditions." +
+                    "Ideal conditions include a light to moderate offshore wind,because it blows into the front of the wave, making it a barrel or tube wave.Waves are Left handed and Right Handed depending upon " +
+                    "the breaking formation of the wave. Waves are generally recognized by the surfaces over which they break. For example, there are Beach breaks, Reef breaks and Point breaks. The most important influence " +
+                    "on wave shape is the topography of the seabed directly behind and immediately beneath the breaking wave.The contours of the reef or bar front becomes stretched by diffraction. Each break is different, since each " +
+                    "location's underwater topography is unique. At beach breaks, sandbanks change shape from week to week. Surf forecasting is aided by advances in information technology. Mathematical modeling graphically depicts the size and direction of swells around the globe.",
+                });
+            }
             context.SaveChanges();
         }
 
