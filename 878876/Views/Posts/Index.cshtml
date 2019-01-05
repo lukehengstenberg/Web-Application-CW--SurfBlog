@@ -15,21 +15,24 @@
 }
 
 <table class="table">
-    <thead>
+    <thead class="table-head">
         <tr>
             <th>
-                All Posts:
+                <h1>All Posts:</h1>
             </th>
+            <td></td>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="table-body">
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="table-title">
                 <th>
                     @Html.DisplayFor(modelItem => item.Title)
                 </th>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td>
