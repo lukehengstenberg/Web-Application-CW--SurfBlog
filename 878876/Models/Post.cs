@@ -21,6 +21,8 @@ namespace _878876.Models
         public DateTime PostDate { get; set; }
         
         [Required]
+        [MinLength(5)]
+        [MaxLength(3000)]
         public string Content { get; set; }
 
     }

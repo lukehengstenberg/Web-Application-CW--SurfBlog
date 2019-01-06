@@ -9,6 +9,7 @@ using _878876.Data;
 using _878876.Models;
 using _878876.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Security.Application;
 
 namespace _878876.Controllers
 {
@@ -109,6 +110,7 @@ namespace _878876.Controllers
         {
             if (ModelState.IsValid)
             {
+                post.Content = Sanitizer.GetSafeHtmlFragment(post.Content);
                 post.Author = User.Identity.Name.ToString();
                 post.PostDate = DateTime.Now;
                 _context.Add(post);
@@ -152,6 +154,7 @@ namespace _878876.Controllers
             {
                 try
                 {
+                    post.Content = Sanitizer.GetSafeHtmlFragment(post.Content);
                     post.Author = User.Identity.Name.ToString();
                     post.PostDate = DateTime.Now;
                     _context.Update(post);
