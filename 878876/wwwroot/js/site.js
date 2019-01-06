@@ -1,7 +1,5 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿
+// Script to animate banner.
 var slideIndex = 0;
 carousel();
 
@@ -14,9 +12,10 @@ function carousel() {
     slideIndex++;
     if (slideIndex > x.length) { slideIndex = 1 }
     x[slideIndex - 1].style.display = "block";
-    setTimeout(carousel, 4000);
-}
+    setTimeout(carousel, 3000);
+};
 
+// Script to display error screen when unauthorized.
 $(function () {
     $(document).ajaxError(function (xhr, props) {
         if (props.status == 403) {
@@ -25,4 +24,9 @@ $(function () {
             window.location = "https://localhost:44392/Account/Login";
         }
     });
+});
+
+// Script to toggle post content.
+$('.toggleButton').click(function () {
+    $(this).closest('tr').next('tr').find('.postContent').toggle();
 });

@@ -20,17 +20,48 @@
 .table-head{
     background-color: darkcyan;
 }
+
 .leftcolumn {
     float: left;
     width: 70%;
     background-color: #f1f1f1;
+    border: 1px solid black;
+    margin: 10px;
 }
 .rightcolumn{
     float: right;
     width: 25%;
     background-color: #f1f1f1;
     padding-left: 20px;
+    border: 1px solid black;
+    margin: 10px;
 }
-body {
-    background-image: url("~/images/background-image.jpg");
+.colcontent{
+    padding:10px;
 }
+.comments{
+    margin-top: 10px;
+}
+.comments-body{
+    border: 1px solid black;
+}
+body{
+    background-image: url(../images/blogbackground.jpg);
+}
+.container-body{
+    background-color: white;
+    overflow: auto;
+}
+.toggleButton {
+    background: darkcyan;
+    border-radius: 31%;
+    border: 2px solid #4e6096;
+    cursor: pointer;
+    color: #ffffff;
+    width: 20%;
+}
+.postContent{
+    display: none;
+}
+
+

@@ -193,6 +193,7 @@ namespace _878876.Controllers
         }
 
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel vm)
         {
@@ -229,6 +230,7 @@ namespace _878876.Controllers
         }
 
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
@@ -244,6 +246,7 @@ namespace _878876.Controllers
             return View(vm);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

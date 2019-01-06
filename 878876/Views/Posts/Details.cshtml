@@ -9,7 +9,7 @@
 }
 
 <div class="leftcolumn">
-<div>
+<div class="colcontent">
     <h4>@Html.DisplayFor(model => model.Post.Title)</h4>
     <hr />
     <dl class="row">
@@ -39,61 +39,66 @@
         </dd>
     </dl>
 </div>
-<table class="table">
-    <thead class="table-title">
-        <tr>
-            <th>
-                Comments:
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Comment item in Model.Comments)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                <td>
-                    Posted by: @Html.DisplayFor(modelItem => item.Author) - @Html.DisplayFor(modelItem => item.CommentDate)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<div>
-    @if ((await AuthorizationService.AuthorizeAsync(User, "canEdit")).Succeeded)
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Post.Id">Edit</a>
-    }
-    <a asp-action="Index">Back to Posts</a>
-</div>
 </div>
 
 <div class="rightcolumn">
-<h4>Add New Comment</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Details">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PostID" value="@Model.Post.Id" />
-            <div class="form-group">
-                <input asp-for="Author" class="form-control" value="@UserManager.GetUserName(User)" hidden />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group comment-box">
-                <label asp-for="Content" class="control-label">Enter your comment here: </label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-        </form>
+    <h4 class="colcontent">Post New Comment:</h4>
+    <hr />
+    <div class="row colcontent">
+        <div>
+            <form asp-action="Details">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PostID" value="@Model.Post.Id" />
+                <div class="form-group">
+                    <input asp-for="Author" class="form-control" value="@UserManager.GetUserName(User)" hidden />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label">Enter your comment here: </label>
+                    <input asp-for="Content" class="form-control" />
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<div class="leftcolumn comments">
+    <table class="table">
+        <thead class="table-title">
+            <tr>
+                <th>
+                    Comments:
+                </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody class="comments-body">
+            @foreach (Comment item in Model.Comments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        Posted by: @Html.DisplayFor(modelItem => item.Author) - @Html.DisplayFor(modelItem => item.CommentDate)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "canEdit")).Succeeded)
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Post.Id">Edit</a>
+        }
+        <a asp-action="Index">Back to Posts</a>
+    </div>
 </div>
+
+
 
 

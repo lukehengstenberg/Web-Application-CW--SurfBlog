@@ -29,13 +29,13 @@
         {
             <tr class="table-title">
                 <th>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => item.Title)                   
                 </th>
-                <td></td>
+                <td><button class="toggleButton">&#9947</button></td>
                 <td></td>
             </tr>
-            <tr>
-                <td>
+            <tr class="table-content">
+                <td class="postContent">
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
