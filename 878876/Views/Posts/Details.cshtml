@@ -74,6 +74,7 @@
                     Comments:
                 </th>
                 <th> </th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="comments-body">
@@ -85,6 +86,12 @@
                     </td>
                     <td>
                         Posted by: @Html.DisplayFor(modelItem => item.Author) - @Html.DisplayFor(modelItem => item.CommentDate)
+                    </td>
+                    <td>
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "canComment")).Succeeded)
+                        {
+                            <a asp-action="DeleteComment" asp-route-id="@item.Id">Delete</a>
+                        }
                     </td>
                 </tr>
             }

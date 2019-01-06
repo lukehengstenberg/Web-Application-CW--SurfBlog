@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace _878876.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -206,6 +207,35 @@ namespace _878876.Controllers
         private bool PostExists(int id)
         {
             return _context.Post.Any(e => e.Id == id);
+        }
+
+        [Authorize(Policy = "canComment")]
+        public async Task<IActionResult> DeleteComment(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var comment = await _context.Comment
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return View(comment);
+        }
+
+        [HttpPost, ActionName("DeleteComment")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "canComment")]
+        public async Task<IActionResult> DeleteCommentConfirmed(int id)
+        {
+            var comment = await _context.Comment.FindAsync(id);
+            _context.Comment.Remove(comment);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

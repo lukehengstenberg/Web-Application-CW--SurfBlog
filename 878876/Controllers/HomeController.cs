@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace _878876.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class HomeController : Controller
     {
         [AllowAnonymous]

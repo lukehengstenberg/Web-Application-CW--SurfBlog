@@ -14,6 +14,7 @@ using System.Security.Claims;
 namespace _878876.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
