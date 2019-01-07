@@ -618,8 +618,17 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: mediumaquamarine;
+  border-radius: 25px;
+  border: 2px solid purple;
 }
 
+.col-sm-2, .col-sm-10{
+    background-color: transparent;
+    border: none;
+}
 .col {
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
